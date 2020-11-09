@@ -51,6 +51,15 @@ fancygit_prompt_builder() {
     fi
 
     PS1="${bold}${venv}${user_at_host}$where$(fg_branch_name)${bold_none}\n\$ "
+    
+    # If this is an xterm set the title to user@host:dir
+    case "$TERM" in
+    xterm*|rxvt*)
+        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+        ;;
+    *)
+        ;;
+    esac
 }
 
 PROMPT_COMMAND="fancygit_prompt_builder"
